@@ -48,73 +48,77 @@ class Principal extends Component {
     };
     render() {
         return (
-            <div className="container">
-                <div className="row">
-                    <div className="col s10">
-                        <div className="card">
-                            <div className="card-content">
-                                <form onSubmit={this.addUser}>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <h6>Nombre</h6>
-                                            <input value={this.state.name} name="name" onChange={this.handleChange} type="text" placeholder="Nombre" />
-                                        </div>
+            // <link href="assets/css/background.css" rel="stylesheet" type="text/css">
+                <div>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col s10">
+                                <div className="card">
+                                    <div className="card-content">
+                                        <form onSubmit={this.addUser}>
+                                            <div className="row">
+                                                <div className="input-field col s12">
+                                                    <h6>Nombre</h6>
+                                                    <input value={this.state.name} name="name" onChange={this.handleChange} type="text" placeholder="Nombre" />
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="input-field col s12">
+                                                    <h6>Edad</h6>
+                                                    <input value={this.state.age} name="age" onChange={this.handleChange} type="text" placeholder="Edad" />
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="input-field col s12">
+                                                    <h6>Sexo</h6>
+                                                    <input value={this.state.sex} name="sex" onChange={this.handleChange} type="text" placeholder="Sexo" />
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="input-field col s12">
+                                                    <h6>Cedula</h6>
+                                                    <input value={this.state.document} name="document" onChange={this.handleChange} type="text" placeholder="Cedula" />
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="input-field col s12">
+                                                    <h6>Descríbete a ti mismo</h6>
+                                                    <input value={this.state.description} name="description" onChange={this.handleChange} type="text" placeholder="" />
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="input-field col s12">
+                                                    <h6>Describe los proyectos en los que has trabajado</h6>
+                                                    <input value={this.state.projects} name="projects" onChange={this.handleChange} type="text" placeholder="" />
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="input-field col s12">
+                                                    <h6>¿Cuál es tu perfil profesional?</h6>
+                                                    <input value={this.state.profile} name="profile" onChange={this.handleChange} type="text" placeholder="" />
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="input-field col s12">
+                                                    <h6>¿Cuáles crees que son tus cualidades a la hora de trabajar en equipo?</h6>
+                                                    <input value={this.state.qualities} name="qualities" onChange={this.handleChange} type="text" placeholder="" />
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="input-field col s12">
+                                                    <h6>¿Cuál ha sido tu mayor logro?</h6>
+                                                    <input value={this.state.achievement} name="achievement" onChange={this.handleChange} type="text" placeholder="" />
+                                                </div>
+                                            </div>
+                                            <button  type="submit" className="btn light-blue darken-4">Send</button>
+                                        </form>
                                     </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <h6>Edad</h6>
-                                            <input value={this.state.age} name="age" onChange={this.handleChange} type="text" placeholder="Edad" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <h6>Sexo</h6>
-                                            <input value={this.state.sex} name="sex" onChange={this.handleChange} type="text" placeholder="Sexo" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <h6>Cedula</h6>
-                                            <input value={this.state.document} name="document" onChange={this.handleChange} type="text" placeholder="Cedula" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <h6>Descríbete a ti mismo</h6>
-                                            <input value={this.state.description} name="description" onChange={this.handleChange} type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <h6>Describe los proyectos en los que has trabajado</h6>
-                                            <input value={this.state.projects} name="projects" onChange={this.handleChange} type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <h6>¿Cuál es tu perfil profesional?</h6>
-                                            <input value={this.state.profile} name="profile" onChange={this.handleChange} type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <h6>¿Cuáles crees que son tus cualidades a la hora de trabajar en equipo?</h6>
-                                            <input value={this.state.qualities} name="qualities" onChange={this.handleChange} type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <h6>¿Cuál ha sido tu mayor logro?</h6>
-                                            <input value={this.state.achievement} name="achievement" onChange={this.handleChange} type="text" placeholder="" />
-                                        </div>
-                                    </div>
-                                    <button  type="submit" className="btn light-blue darken-4">Send</button>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            // </link>
         )
     }
 }
