@@ -1,59 +1,104 @@
 import React, { Component } from 'react';
 import Principal from './components/principal';
 import Info from './components/info';
-import Proyecto from './components/proyecto'
+import './css/style.css';
+import './css/slick-team-slider.css';
+import './css/font-awesome.min.css';
+//import './css/bootstrap.min.css';
+import Login from './components/login';
+import Inicio from './components/inicio';
+
 
 
 
 class App extends Component {
-
-
     constructor(props) {
         super(props);
         this.state = {
-            showPrincipal: true,
-            showPost: false,
-            showList: false
+            showInicio: true,
+            showPrincipal: false,
+            showInfo: false,
+            showLogin: false,
         };
         this.cambiarEstado = this.cambiarEstado.bind(this);
-        this.cambiarEstado2 = this.cambiarEstado2.bind(this);
+        this.cambiarALogin = this.cambiarALogin.bind(this);
+        this.cambiarAInicio= this.cambiarAInicio.bind(this);
+        this.cambiarAFormulario= this.cambiarAFormulario.bind(this);
+        this.cambiarAInfo = this.cambiarAInfo.bind(this);
     };
 
-    cambiarEstado(princi, post) {
+    cambiarEstado(inicio,login, principal) {
         console.log('LLEgue cambiar estado')
         this.setState({
-            showPrincipal: princi,
-            showPost: post
+            showPrincipal: principal,
+            showLogin: login,
+            showInicio: inicio
         })
-        console.log('Post: ' + this.state.showPost + ',Princ: ' + this.state.showPrincipal)
+        
     }
-
-
-    cambiarEstado2(post, list) {
-        console.log('LLEgue cambiar estado')
+    cambiarALogin(){
         this.setState({
-            showPost: post,
-            showList: list
+            showInicio: false,
+            showLogin: true,
+            showPrincipal: false,
+            showInfo : false
         })
-        console.log('Post: ' + this.state.showPost + ',Princ: ' + this.state.showPrincipal)
     }
+    cambiarAInicio(){
+        this.setState({
+            showInicio: true,
+            showLogin: false,
+            showPrincipal: false,
+            showInfo: false
+        })
+
+    }
+    cambiarAFormulario(){
+        this.setState({
+            howInicio: false,
+            showLogin: false,
+            showPrincipal: true,
+            showInfo: false
+        })
+    }
+    cambiarAInfo(){
+        this.setState({
+            howInicio: false,
+            showLogin: false,
+            showPrincipal: false,
+            showInfo: true
+        })
+    }
+
+    
+    
+
     render() {
         return (
             <div>
                 <nav className="light-blue darken-4">
-                        <div className="container">
-                            <a className="brand-logo" href="/">J-Match</a>
-                        </div>
+                     <div className="container">
+                            <div className="navbar-header">
+                                <a className="brand-logo" href="/">J-Match</a>
+                            </div>
+                            <div className = "right">
+                            <ul>
+                            <li><a onClick={this.cambiarAInicio}>Inicio</a></li>
+                            <li><a onClick={this.cambiarALogin}>Ingresa</a></li>
+                            </ul>
+                            </div>
+                    </div>            
                 </nav>
-                {/* Formulario */}
-                {this.state.showPrincipal && <Principal metodo={this.cambiarEstado} />}
-                {/* Despues del Formulario */}
-                {this.state.showPost && <Info metodo2={this.cambiarEstado2} />}
+            {/* Inicio */}
+            {this.state.showInicio && <Inicio/>}
+            {/* Inicio */}
+            {this.state.showLogin && <Login metodo={this.cambiarAFormulario}/>}
+            {/*formulario*/}
+            {this.state.showPrincipal && <Principal metodo2= {this.cambiarAInfo}/>}
+            {/*informacion*/}
+            {this.state.showInfo && <Info/>}
 
-                {/* Despues del Personality */}
-                {this.state.showList && <Proyecto />}
-
-
+  
             </div>
         )
     }

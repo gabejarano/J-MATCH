@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Info from './info'
+
 
 class Principal extends Component {
 
@@ -30,14 +30,13 @@ class Principal extends Component {
             }
         })
             .then(res => res.json(res))
-            .then(()=> {this.props.metodo(false,true)})
+            .then(()=> {this.props.metodo2()})
             .catch(err => console.error(err));
 
             //Poner redireccioanmiento a "Has sido registrado exitosamente"
 
         e.preventDefault();
     }
-    
 
     handleChange(e) {
         const { name, value } = e.target;
