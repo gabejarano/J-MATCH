@@ -8,8 +8,8 @@ class Login extends Component{
 	}
 
 cambiar(e){
-	console.log("valiendo");
-	{this.props.metodo()} 
+	
+	{this.props.metodoRegistro()} 
 	e.preventDefault();
 }
     render(){
@@ -67,6 +67,12 @@ cambiar(e){
 			</div>
 		</div>
 	</div>
+	<br></br>
+	<br></br>
+	<br></br>
+	<br></br>
+	<br></br>
+	<br></br>
             </div>
         )};
 

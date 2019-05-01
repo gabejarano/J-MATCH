@@ -70,18 +70,7 @@ class Inicio extends Component{
       </div>
     </div>
   </footer>
-  <div className="footer-bottom">
-    <div className="container">
-      <div style={{visibility: 'visible', animationName: 'zoomIn'}} className="col-md-12 text-center wow zoomIn">
-        <div className="footer_copyright">
-          <p> © Copyright, All Rights Reserved.</p>
-          <div className="credits">
-            Designed by <a >J-Match</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
             </div>
         )

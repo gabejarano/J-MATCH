@@ -7,7 +7,8 @@ import './css/font-awesome.min.css';
 //import './css/bootstrap.min.css';
 import Login from './components/login';
 import Inicio from './components/inicio';
-
+import SingUp from './components/singUp';
+import CrearEquipo from './components/crearEquipo'
 
 
 
@@ -19,12 +20,16 @@ class App extends Component {
             showPrincipal: false,
             showInfo: false,
             showLogin: false,
+            showRegistro:false,
+            showRegistriEquipo:false
         };
         this.cambiarEstado = this.cambiarEstado.bind(this);
         this.cambiarALogin = this.cambiarALogin.bind(this);
         this.cambiarAInicio= this.cambiarAInicio.bind(this);
         this.cambiarAFormulario= this.cambiarAFormulario.bind(this);
         this.cambiarAInfo = this.cambiarAInfo.bind(this);
+        this.cambiarARegistro= this.cambiarARegistro.bind(this);
+        this.cambiarARegistroEquipos= this.cambiarARegistroEquipos.bind(this);
     };
 
     cambiarEstado(inicio,login, principal) {
@@ -41,7 +46,9 @@ class App extends Component {
             showInicio: false,
             showLogin: true,
             showPrincipal: false,
-            showInfo : false
+            showInfo : false,
+            showRegistro: false,
+            showRegistriEquipo:false
         })
     }
     cambiarAInicio(){
@@ -49,27 +56,54 @@ class App extends Component {
             showInicio: true,
             showLogin: false,
             showPrincipal: false,
-            showInfo: false
+            showInfo: false,
+            showRegistro: false,
+            showRegistriEquipo:false
         })
 
     }
     cambiarAFormulario(){
         this.setState({
-            howInicio: false,
+            showInicio: false,
             showLogin: false,
             showPrincipal: true,
-            showInfo: false
+            showInfo: false,
+            showRegistro: false,
+            showRegistriEquipo:false
         })
     }
     cambiarAInfo(){
         this.setState({
-            howInicio: false,
+            showInicio: false,
             showLogin: false,
             showPrincipal: false,
-            showInfo: true
+            showInfo: true,
+            showRegistro: false,
+            showRegistriEquipo:false
         })
     }
+    cambiarARegistro(){
+        this.setState({
+            showInicio: false,
+            showLogin: false,
+            showPrincipal: false,
+            showInfo: false,
+            showRegistro: true,
+            showRegistriEquipo:false
 
+        })
+    }
+    cambiarARegistroEquipos(){
+        this.setState({
+
+            showInicio: false,
+            showLogin: false,
+            showPrincipal: false,
+            showInfo: false,
+            showRegistro: false,
+            showRegistriEquipo:true
+        })
+    }
     
     
 
@@ -92,12 +126,28 @@ class App extends Component {
             {/* Inicio */}
             {this.state.showInicio && <Inicio/>}
             {/* Inicio */}
-            {this.state.showLogin && <Login metodo={this.cambiarAFormulario}/>}
+            {this.state.showLogin && <Login metodoRegistro={this.cambiarARegistro}/>}
             {/*formulario*/}
             {this.state.showPrincipal && <Principal metodo2= {this.cambiarAInfo}/>}
             {/*informacion*/}
             {this.state.showInfo && <Info/>}
+            {/*registro*/}
+            {this.state.showRegistro && <SingUp metodoLogin = {this.cambiarALogin} metodoRegistroEquipos = {this.cambiarARegistroEquipos}/>}
+            {/*registroEquipo*/}
+            {this.state.showRegistriEquipo && <CrearEquipo/>}
 
+            <div className="footer-bottom">
+    <div className="container">
+      <div style={{visibility: 'visible', animationName: 'zoomIn'}} className="col-md-12 text-center wow zoomIn">
+        <div className="footer_copyright">
+          <p> © Copyright, All Rights Reserved.</p>
+          <div className="credits">
+            Designed by <a >J-Match</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   
             </div>
         )

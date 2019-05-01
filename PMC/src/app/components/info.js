@@ -48,6 +48,10 @@ class Info extends Component {
     render(){
         return (
             <div>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
                 <div class="container">
                 <div class="p-t-40 p-b-40  text-center">
                     
@@ -55,7 +59,7 @@ class Info extends Component {
                         Observa tus cualidades y caracteristicas de tu personalidad</h2>
 </div>
             </div>
-        <div class="section white">
+        <div >
         <div class="container">
             <div class="p-t-60 p-b-50 ">
                 <div class="row feature-list">
@@ -111,7 +115,7 @@ class Info extends Component {
             </div>
         </div>
     </div>
-    <center><button  type="submit" onClick={()=>this.props.metodo2(false,true)} className="btn light-blue darken-4">Encuentra tu proyecto</button></center>
+    <center><button  type="submit" onClick={()=>this.props.metodo2(false,true)} className="btn light-blue darken-4">Evalua tu equipo</button></center>
     
             </div>
         )};
