@@ -2,14 +2,18 @@ import React,{Component} from 'react';
 
 class CrearEquipo extends Component{
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             showCodigo:false,
             showCrear:false
         }
         this.mostrarCodigo= this.mostrarCodigo.bind(this);
         this.mostrarCrear= this.mostrarCrear.bind(this);
+        this.cambiar= this.cambiar.bind(this);
+      }
+      cambiar(e){
+          this.props.metodoEquipo();
       }
       mostrarCodigo(e){
         this.setState({
@@ -53,7 +57,7 @@ class CrearEquipo extends Component{
                              </div>
                             </div>
                             {this.state.showCodigo && <div className="col-md-4 col-sm-4 col-xs-12 col-6"> 
-                                                        <form>
+                                                        <form onSubmit={this.cambiar}>
                                                             <div className="form-group">
                                                                 <input type="text" className="form-input" name="codigo"  placeholder="Codigo de quipo"/>
                                                             </div>
@@ -63,7 +67,7 @@ class CrearEquipo extends Component{
                                                         </form>
                                                     </div>}
                             {this.state.showCrear && <div className="col-md-4 col-sm-4 col-xs-12 col-6"> 
-                                                        <form>
+                                                        <form onSubmit={this.cambiar}>
                                                             <div className="form-group">
                                                                 <input type="text" className="form-input"  name="nombre equipo"  placeholder="Nombre equipo"/>
                                                             </div>

@@ -11,6 +11,7 @@ class Info extends Component {
             compromiso : ''
         };
 
+        this.cambiar= this.cambiar.bind(this);
     };
     componentDidMount(){
         this.obtenerInformacion();
@@ -40,6 +41,9 @@ class Info extends Component {
         
     }
 
+    cambiar(){
+        this.props.metodoEquipo();
+    }
        
         
         
@@ -115,8 +119,24 @@ class Info extends Component {
             </div>
         </div>
     </div>
-    <center><button  type="submit" onClick={()=>this.props.metodo2(false,true)} className="btn light-blue darken-4">Evalua tu equipo</button></center>
+    <center><button  type="submit" onClick={this.cambiar} className="btn light-blue darken-4">Regresar</button></center>
     
+    <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
             </div>
         )};
 };

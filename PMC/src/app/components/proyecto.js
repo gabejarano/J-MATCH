@@ -64,6 +64,7 @@ class Proyecto extends Component{
                         </div>
                     </div>
                 </div>
+                
             </div>
 
         )}; 

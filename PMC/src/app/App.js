@@ -8,7 +8,9 @@ import './css/font-awesome.min.css';
 import Login from './components/login';
 import Inicio from './components/inicio';
 import SingUp from './components/singUp';
-import CrearEquipo from './components/crearEquipo'
+import CrearEquipo from './components/crearEquipo';
+import Equipo from './components/Equipo';
+import Resultado from './components/resultado';
 
 
 
@@ -21,7 +23,9 @@ class App extends Component {
             showInfo: false,
             showLogin: false,
             showRegistro:false,
-            showRegistriEquipo:false
+            showRegistriEquipo:false,
+            showEquipo:false,
+            showResultado: false
         };
         this.cambiarEstado = this.cambiarEstado.bind(this);
         this.cambiarALogin = this.cambiarALogin.bind(this);
@@ -30,6 +34,8 @@ class App extends Component {
         this.cambiarAInfo = this.cambiarAInfo.bind(this);
         this.cambiarARegistro= this.cambiarARegistro.bind(this);
         this.cambiarARegistroEquipos= this.cambiarARegistroEquipos.bind(this);
+        this.cambiarAEquipo= this.cambiarAEquipo.bind(this);
+        this.cambiarAResultado= this.cambiarAResultado.bind(this);
     };
 
     cambiarEstado(inicio,login, principal) {
@@ -48,7 +54,9 @@ class App extends Component {
             showPrincipal: false,
             showInfo : false,
             showRegistro: false,
-            showRegistriEquipo:false
+            showRegistriEquipo:false,
+            showEquipo:false,
+            showResultado: false
         })
     }
     cambiarAInicio(){
@@ -58,7 +66,9 @@ class App extends Component {
             showPrincipal: false,
             showInfo: false,
             showRegistro: false,
-            showRegistriEquipo:false
+            showRegistriEquipo:false,
+            showEquipo:false,
+            showResultado: false
         })
 
     }
@@ -69,7 +79,9 @@ class App extends Component {
             showPrincipal: true,
             showInfo: false,
             showRegistro: false,
-            showRegistriEquipo:false
+            showRegistriEquipo:false,
+            showEquipo:false,
+            showResultado: false
         })
     }
     cambiarAInfo(){
@@ -79,7 +91,9 @@ class App extends Component {
             showPrincipal: false,
             showInfo: true,
             showRegistro: false,
-            showRegistriEquipo:false
+            showRegistriEquipo:false,
+            showEquipo:false,
+            showResultado: false
         })
     }
     cambiarARegistro(){
@@ -89,7 +103,9 @@ class App extends Component {
             showPrincipal: false,
             showInfo: false,
             showRegistro: true,
-            showRegistriEquipo:false
+            showRegistriEquipo:false,
+            showEquipo:false,
+            showResultado: false
 
         })
     }
@@ -101,7 +117,35 @@ class App extends Component {
             showPrincipal: false,
             showInfo: false,
             showRegistro: false,
-            showRegistriEquipo:true
+            showRegistriEquipo:true,
+            showEquipo:false,
+            showResultado: false
+        })
+    }
+    cambiarAEquipo(){
+        this.setState({
+
+            showInicio: false,
+            showLogin: false,
+            showPrincipal: false,
+            showInfo: false,
+            showRegistro: false,
+            showRegistriEquipo:false,
+            showEquipo:true,
+            showResultado: false
+        })
+    }
+    cambiarAResultado(){
+        this.setState({
+
+            showInicio: false,
+            showLogin: false,
+            showPrincipal: false,
+            showInfo: false,
+            showRegistro: false,
+            showRegistriEquipo:false,
+            showEquipo:false,
+            showResultado: true
         })
     }
     
@@ -126,15 +170,19 @@ class App extends Component {
             {/* Inicio */}
             {this.state.showInicio && <Inicio/>}
             {/* Inicio */}
-            {this.state.showLogin && <Login metodoRegistro={this.cambiarARegistro}/>}
+            {this.state.showLogin && <Login metodoRegistro={this.cambiarARegistro} />}
             {/*formulario*/}
             {this.state.showPrincipal && <Principal metodo2= {this.cambiarAInfo}/>}
             {/*informacion*/}
-            {this.state.showInfo && <Info/>}
+            {this.state.showInfo && <Info metodoEquipo= {this.cambiarAEquipo}/>}
             {/*registro*/}
             {this.state.showRegistro && <SingUp metodoLogin = {this.cambiarALogin} metodoRegistroEquipos = {this.cambiarARegistroEquipos}/>}
             {/*registroEquipo*/}
-            {this.state.showRegistriEquipo && <CrearEquipo/>}
+            {this.state.showRegistriEquipo && <CrearEquipo metodoEquipo = {this.cambiarAEquipo}/>}
+            {/*Mostrar Equipo */}
+            {this.state.showEquipo && <Equipo metodoResultado = {this.cambiarAResultado} metodoRegistro={this.cambiarAFormulario} metodo2= {this.cambiarAInfo}/>}
+            {/*Mostrar resultado*/}
+            {this.state.showResultado && <Resultado metodoEquipo = {this.cambiarAEquipo}/>}
 
             <div className="footer-bottom">
     <div className="container">
