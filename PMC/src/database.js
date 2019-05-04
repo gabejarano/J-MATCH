@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const URI = 'mongodb://localhost/jmatch';
+const URI = 'mongodb://localhost/jmatchi';
 
 mongoose.connect(URI)
         .then(db => console.log('DB is connected'))

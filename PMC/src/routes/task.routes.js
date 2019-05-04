@@ -1,7 +1,8 @@
 const express = require('express');
+const concat = require('concat');
 const router = express.Router();
-const Group = require('../models/taks');
-const Member = require('../models/task');
+const Group = require('../models/group');
+const Member = require('../models/member');
 const PersonalityInsightsV3 = require('watson-developer-cloud/personality-insights/v3');
 
 //-----------------------------------------------Watson-----------------------------------------------//
@@ -22,78 +23,100 @@ const profileParams = {
     accept_language: 'es'
 };
 
-//---------------------------------------------------------Routes---------------------------------------------------//
-
-router.get('/', async (req, res) => {
-    const users = await Group.find();
-    res.json(users);
-});
-
-
-var p = {"hola":"que"};
-var text = " ";
-
-//-------------funcionAux--------------------------------------------------
-
+//---------------------------------------------------------Routes---------------------------------------------------///-------------funcionAux--------------------------------------------------
 //--------------Post grupo--------------------------------------------------
-router.post('/', async (req,res)=>{
-    const {name, numberMembers} = req.body;
-    var i=0;
-    member= [];
-    while(i<numberMembers){
-        member[i] = {
-        name: null ,
-        age: null,
-        sex: null,
-        document: null,
-        personality:null}
-        i++;
-    }
-    var group = new Group({name, numberMembers,member});
-    await group.save();
-    res.json({ status: 'group saved' });
+router.post('/members/:id/groups', async (req, res) => {
+    var id_member = req.params.id;
+    req.body.members = [{ "member": id_member }];
+    const { name, numberMembers, members } = req.body;
+    var group = new Group({ name, numberMembers, members });
+    var actualGroups = await Member.findById(id_member);//.groups
+    var toAdd = { "group": group };
+    var grupitos = actualGroups.groups.concat(toAdd); //concat([actualGroups.groups, toAdd]);
+    console.log('*************'+grupitos)
+        Member.findOneAndUpdate({ _id: id_member }, { $set: { groups: grupitos } }, { new: true }, (err, doc) => {
+            if (err) {
+                console.log("Something wrong when updating data!");
+            }
+            console.log(doc);
+        }),
+
+        await group.save();
+
+    res.json({ status: 'group created by : ' + id_member });
 
 })
 
 //--------------Post miembro de grupo con personalidad---------------------------------------
-router.put('/:id', async (req, res) => {
-    text = req.body.description + ". " + req.body.profile + ". " + req.body.projects + ". " + req.body.qualities + ". " + req.body.achievement + ".";
-    profileParams.content = text;
-    personalityInsights.profile(profileParams, function (err, response) {
+router.post('/members', async (req, res) => {
+    const { name, age, sex, document, personality } = req.body;
+    var newMember = new Member({ name, age, sex, document, personality });
+    await newMember.save();
+    res.json({ status: 'member saved' });
+
+})
+
+router.put('/groups/:id', async (req, res) => {
+    const actualMembers = await Group.findById(req.params.id);
+    var toAdd = req.body.members[0].member;
+    console.log(actualMembers +'----------------------------------')
+    console.log('---------------------' +req.body.members[0].member)
+    var newMembers = concat(actualMembers,[{"member":toAdd}]);
+    await Group.findOneAndUpdate({ _id: req.params.id }, { $set: { members: newMembers } }, { new: true }, (err, doc) => {
         if (err) {
-            console.log('error:', err);
-        } else {
-            req.body.member.personality = response;
-            const { member} = req.body;
-            const user = {member};
-            Group.findByIdAndUpdate(req.params.id, user)
-            res.json({ status: 'User saved' });
+            console.log("Something wrong when updating data!");
         }
+
+        console.log(doc);
     });
+    var group = Group.findById(req.params.id);
+    var actualGroups = await Member.findById(toAdd).groups;
+    console.log(actualGroups)
+    var newGroup = [{ "group": group }];
+    var grupitos = concat([actualGroups, newGroup]);
+    console.log('------------------------' + toString(grupitos) + '.........')
+    await Member.findOneAndUpdate({ _id: toAdd },  {$set: { groups: grupitos } }, { new: true }, (err, doc) => {
+        if (err) {
+            console.log("Something wrong when updating data!");
+        }
+        console.log(doc);
+    }),
+    res.json({ status: 'Group updated' });
+
 });
+
 //--------------Post miembro de grupo sin personalidad---------------------------------------
-router.put('/team/:id', async (req, res) => {
-    
-    
-    const grupo = Group.findById(req.params.id)
-    console.log(grupo)
-    res.json({ status: 'User saved' });
-       
-});
- 
-router.put('/:id', async (req, res) => {
-    const { name, age, sex, document, personality, group } = req.body;
-    const newUser = { name, age, sex, document, personality, group };
-    await Group.findByIdAndUpdate(req.params.id, newUser);
-    res.json('User updated');
+
+
+router.delete('members/:id', async (req, res) => {
+    await Member.findByIdAndDelete(req.params.id);
+    res.json('Member deleted');
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('groups/:id', async (req, res) => {
     await Group.findByIdAndDelete(req.params.id);
-    res.json('User deleted');
+    res.json('Group deleted');
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/members/:id', async (req, res) => {
+    const user = await Member.findById(req.params.id);
+    res.json(user);
+});
+router.get('/members/:id/groups', async (req, res) => {
+    const user = await Member.findById(req.params.id);
+    res.json(user.groups);
+});
+router.get('/members', async (req, res) => {
+    const user = await Member.find();
+    res.json(user);
+});
+
+router.get('/groups', async (req, res) => {
+    const user = await Group.find();
+    res.json(user);
+});
+
+router.get('/groups/:id', async (req, res) => {
     const user = await Group.findById(req.params.id);
     res.json(user);
 });
