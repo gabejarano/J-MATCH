@@ -50,8 +50,8 @@ router.post('/members/:id/groups', async (req, res) => {
 
 //--------------Post member within personility---------------------------------------
 router.post('/members', async (req, res) => {
-    const { name, age, sex, document, personality } = req.body;
-    var newMember = new Member({ name, age, sex, document, personality });
+    const { name, email, password, repassword, age, sex, document, personality } = req.body;
+    var newMember = new Member({ name, email, password, repassword, age, sex, document, personality });
     await newMember.save();
     res.json({ status: 'member saved' });
 
@@ -86,8 +86,6 @@ router.put('/groups/:id', async (req, res) => {
     res.json({ status: 'Group updated' });
 
 });
-
-//--------------Post miembro de grupo sin personalidad---------------------------------------
 
 
 router.delete('members/:id', async (req, res) => {

@@ -6,14 +6,50 @@ class CrearEquipo extends Component{
         super(props);
         this.state={
             showCodigo:false,
-            showCrear:false
+            showCrear:false,
+            name: "",
+            numberMembers: ""
         }
         this.mostrarCodigo= this.mostrarCodigo.bind(this);
         this.mostrarCrear= this.mostrarCrear.bind(this);
         this.cambiar= this.cambiar.bind(this);
+        this.getEquipo= this.getEquipo.bind(this);
+        this.handleChange= this.handleChange.bind(this);
       }
+      handleChange(e) {
+        const { name, value } = e.target;
+        console.log(e.target)
+        this.setState({
+            [name]: value
+    
+        });
+    };
+    getEquipo(a){
+        fetch('/api/task/grupos')
+        .then(res=> res.json())
+        
+    }
+
       cambiar(e){
-          this.props.metodoEquipo();
+        console.log('Entre a post');
+        fetch('/api/task/members')
+        .then(res=>res.json())
+        .then(data=>{
+            var idMiembro = data[data.length-1]._id;
+            fetch('/api/task/members/'+idMiembro+'/groups', {
+                method: 'POST',
+                body: JSON.stringify(this.state),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(res => res.json(res))
+                .then(()=> { this.props.metodoEquipo()})
+                .catch(err => console.error(err));
+        })
+        
+        e.preventDefault();
       }
       mostrarCodigo(e){
         this.setState({
@@ -69,10 +105,10 @@ class CrearEquipo extends Component{
                             {this.state.showCrear && <div className="col-md-4 col-sm-4 col-xs-12 col-6"> 
                                                         <form onSubmit={this.cambiar}>
                                                             <div className="form-group">
-                                                                <input type="text" className="form-input"  name="nombre equipo"  placeholder="Nombre equipo"/>
+                                                                <input type="text" className="form-input" value={this.state.name} name="name" onChange={this.handleChange} placeholder="Nombre equipo"/>
                                                             </div>
                                                             <div className="form-group">
-                                                                <input type="text" className="form-input"  name="numero de integrantes"  placeholder="Numero de integrantes"/>
+                                                                <input type="text" className="form-input" value={this.state.numberMembers} name="numberMembers" onChange={this.handleChange}  placeholder="Numero de integrantes"/>
                                                             </div>
                                                             <div className="form-group">
                                                                 <input type="submit" name="submit" className="form-submit"/>

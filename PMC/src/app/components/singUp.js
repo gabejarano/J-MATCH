@@ -14,8 +14,27 @@ class SingUp extends Component {
         this.cambiar= this.cambiar.bind(this);
         this.cambiarEquipos= this.cambiarEquipos.bind(this);
         this.handleChange= this.handleChange.bind(this);
+        this.addUser = this.addUser.bind(this);
 	}
 
+    addUser(e) {
+        console.log('Entre a post');
+        fetch('/api/task/members', {
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => res.json(res))
+            .then(()=> {this.props.metodoRegistroEquipos()})
+            .catch(err => console.error(err));
+
+            //Poner redireccioanmiento a "Has sido registrado exitosamente"
+
+        e.preventDefault();
+    }
 cambiar(e){
 	
 	{this.props.metodoLogin()} 
@@ -39,7 +58,7 @@ cambiarEquipos(e){
            
     <div className="container-signup">
         <div >
-            <form onSubmit= {this.cambiarEquipos}>
+            <form onSubmit= {this.addUser}>
                 <h2 className="form-title">Create account</h2>
                 <div className="form-group">
                     <input type="text" className="form-input" value={this.state.name} name="name" onChange={this.handleChange} placeholder="Your Name"/>
@@ -51,7 +70,7 @@ cambiarEquipos(e){
                     <input type="password" className="form-input" value={this.state.password} name="password" onChange={this.handleChange} placeholder="Password"/>
                 </div>
                 <div className="form-group">
-                    <input type="password" className="form-input" value={this.state.repassword} name="re_password" onChange={this.handleChange} placeholder="Repeat your password"/>
+                    <input type="password" className="form-input" value={this.state.repassword} name="repassword" onChange={this.handleChange} placeholder="Repeat your password"/>
                 </div>
                 <div className="form-group">
                     <input type="checkbox" name="agree-term" id="agree-term" className="agree-term" />
