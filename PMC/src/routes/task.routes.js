@@ -24,7 +24,9 @@ const profileParams = {
 };
 
 //---------------------------------------------------------Routes---------------------------------------------------///-------------funcionAux--------------------------------------------------
-//--------------Post grupo--------------------------------------------------
+
+
+//--------------Create gruop --------------------------------------------------
 router.post('/members/:id/groups', async (req, res) => {
     var id_member = req.params.id;
     req.body.members = [{ "member": id_member }];
@@ -33,7 +35,6 @@ router.post('/members/:id/groups', async (req, res) => {
     var actualGroups = await Member.findById(id_member);//.groups
     var toAdd = { "group": group };
     var grupitos = actualGroups.groups.concat(toAdd); //concat([actualGroups.groups, toAdd]);
-    console.log('*************'+grupitos)
         Member.findOneAndUpdate({ _id: id_member }, { $set: { groups: grupitos } }, { new: true }, (err, doc) => {
             if (err) {
                 console.log("Something wrong when updating data!");
@@ -47,7 +48,7 @@ router.post('/members/:id/groups', async (req, res) => {
 
 })
 
-//--------------Post miembro de grupo con personalidad---------------------------------------
+//--------------Post member within personility---------------------------------------
 router.post('/members', async (req, res) => {
     const { name, age, sex, document, personality } = req.body;
     var newMember = new Member({ name, age, sex, document, personality });
@@ -56,12 +57,15 @@ router.post('/members', async (req, res) => {
 
 })
 
+/** --------------------- Add member a group----------------------------------------*/
 router.put('/groups/:id', async (req, res) => {
-    const actualMembers = await Group.findById(req.params.id);
+    
+    //Add member to Group
+    var actualMembers = await Group.findById(req.params.id);
     var toAdd = req.body.members[0].member;
-    console.log(actualMembers +'----------------------------------')
+    console.log(actualMembers.members +'************')
     console.log('---------------------' +req.body.members[0].member)
-    var newMembers = concat(actualMembers,[{"member":toAdd}]);
+    var newMembers = actualMembers.members.concat({"member":toAdd});
     await Group.findOneAndUpdate({ _id: req.params.id }, { $set: { members: newMembers } }, { new: true }, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
@@ -69,12 +73,16 @@ router.put('/groups/:id', async (req, res) => {
 
         console.log(doc);
     });
-    var group = Group.findById(req.params.id);
-    var actualGroups = await Member.findById(toAdd).groups;
+
+    //Add group to member
+    var group = await Group.findById(req.params.id);
+    var actualGroups = await Member.findById(toAdd);//.groups
+    console.log('*************'+group)
     console.log(actualGroups)
-    var newGroup = [{ "group": group }];
-    var grupitos = concat([actualGroups, newGroup]);
-    console.log('------------------------' + toString(grupitos) + '.........')
+    var newGroup = { "group": group };
+    console.log(',,,,,,,,,,,,,,,'+newGroup)
+    var grupitos = actualGroups.groups.concat(newGroup);
+    console.log('------------------------' + grupitos + '.........')
     await Member.findOneAndUpdate({ _id: toAdd },  {$set: { groups: grupitos } }, { new: true }, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
