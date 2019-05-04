@@ -63,8 +63,6 @@ router.put('/groups/:id', async (req, res) => {
     //Add member to Group
     var actualMembers = await Group.findById(req.params.id);
     var toAdd = req.body.members[0].member;
-    console.log(actualMembers.members +'************')
-    console.log('---------------------' +req.body.members[0].member)
     var newMembers = actualMembers.members.concat({"member":toAdd});
     await Group.findOneAndUpdate({ _id: req.params.id }, { $set: { members: newMembers } }, { new: true }, (err, doc) => {
         if (err) {
@@ -77,12 +75,8 @@ router.put('/groups/:id', async (req, res) => {
     //Add group to member
     var group = await Group.findById(req.params.id);
     var actualGroups = await Member.findById(toAdd);//.groups
-    console.log('*************'+group)
-    console.log(actualGroups)
     var newGroup = { "group": group };
-    console.log(',,,,,,,,,,,,,,,'+newGroup)
     var grupitos = actualGroups.groups.concat(newGroup);
-    console.log('------------------------' + grupitos + '.........')
     await Member.findOneAndUpdate({ _id: toAdd },  {$set: { groups: grupitos } }, { new: true }, (err, doc) => {
         if (err) {
             console.log("Something wrong when updating data!");
@@ -115,13 +109,27 @@ router.get('/members/:id/groups', async (req, res) => {
     res.json(user.groups);
 });
 router.get('/members', async (req, res) => {
-    const user = await Member.find();
-    res.json(user);
+    await Member.find()
+    .populate('groups.group')
+    .exec( (err, profi) => {
+        if (err) {
+          return res.status(500).json(err);
+        } else {
+          return res.status(200).json(profi);
+        }
+})
 });
 
 router.get('/groups', async (req, res) => {
-    const user = await Group.find();
-    res.json(user);
+    await Group.find()
+    .populate('members.member')
+    .exec( (err, profi) => {
+        if (err) {
+          return res.status(500).json(err);
+        } else {
+          return res.status(200).send(profi);
+        }
+})
 });
 
 router.get('/groups/:id', async (req, res) => {
